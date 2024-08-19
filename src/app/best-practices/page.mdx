@@ -1,0 +1,19 @@
+# Best practices
+
+Different types of links:
+- Navigating with paths: `/folder-name/`
+- Navigating with URLs: `https://www.dhub.dev/`
+
+#### Markdown link
+For all internal links the easiest way is using markdown syntax.
+
+```mdx
+[text link](/pathName)
+```
+
+#### Next/Link
+When you want to open in a new tab, use the `target="blank"` attribute inside Nextjs `Link` component.
+
+```mdx
+<Link href="/folder-name/" target="blank">text link</Link>
+```

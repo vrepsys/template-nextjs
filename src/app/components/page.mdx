@@ -1,0 +1,287 @@
+# Supported components
+
+The overview of all available components in Portal template and guides how to use them.
+
+## Text
+
+The Portal template offers a collection of pre-styled <a href="https://www.markdownguide.org/basic-syntax/" target="blank">Markdown</a> typography elements to help you create a well-structured document.
+
+| Style | Markdown syntax | Alternative syntax |
+| :--- | :--- | :--- |
+| <h1>Heading 1</h1> | `# Heading 1` |  <pre><code>Heading 1<br/>=========</code></pre> |
+| <h2>Heading 2</h2> | `## Heading 2` | `Heading 2` <br/> `---------` |
+| <h3>Heading 3</h3> | `### Heading 3` | |
+| <h4>Heading 4</h4> | `#### Heading 4` | |
+| <h5>Heading 5</h5> | `##### Heading 5` | |
+| <h6>Heading 6</h6> | `###### Heading 6` | |
+| Plain text | `Plain text` | |
+| **Bold text** | `**Bold text**` | `__Bold text__` |
+| *Italic text* | `*Italic text*` | `_Italic text_` |
+| `Inline code text` |  `` `Inline code` ``  | |
+| [Text link](#) | `[Text link](url)` | |
+
+<Callout type="info" title="Compatibility">
+H1 - H6 headings inside the table are not supported by the markdown. The example above is using HTML tags instead.
+</Callout>
+
+## List
+
+Lists are a great way to organize information in a structured manner. They can be used to present a series of items, steps, or bullet points in a clear and concise way.
+
+### Numbered List
+
+1. Cook pasta
+2. Add tomatoes
+3. Toss pasta with sauce
+
+```Markdown title="Markdown syntax"
+1. Cook pasta
+2. Add tomatoes
+3. Toss pasta with sauce
+```
+
+### Bulleted List
+
+- Classic spaghetti with tomato basil
+- Penne with creamy pesto
+- Fusilli with garlic and olive oil
+
+```Markdown title="Markdown syntax"
+- Classic spaghetti with tomato basil
+- Penne with creamy pesto
+- Fusilli with garlic and olive oil
+```
+
+## Callout
+
+Callout elements are meant to draw attention to important information or provide additional context to the user.
+
+<Callout type="note" title="Note">
+  The note callout is a subtle callout used to provide supplementary information
+  or tips. It helps users gain additional insights without distracting from the
+  main content.
+</Callout>
+
+```mdx
+<Callout type="note" title="Note">...</Callout>
+```
+
+
+<Callout type="info" title="Info">
+  The info callout is a blue callout designed to capture more attention from the
+  user than a simple note. It highlights important information that users should
+  be aware of.
+</Callout>
+
+```mdx
+<Callout type="info" title="Info">...</Callout>
+```
+
+<Callout type="warning" title="Warning">
+  The warning callout is an orange callout used to alert users about potential
+  issues or cautionary details. It draws attention to situations that require
+  careful consideration.
+</Callout>
+
+```mdx
+<Callout type="warning" title="Warning">...</Callout>
+```
+
+<Callout type="success" title="Success">
+  The success callout is a green callout designed to highlight positive outcomes
+  or accomplishments. It draws attention to achievements and important
+  confirmations, ensuring they are noticed.
+</Callout>
+
+```mdx
+<Callout type="success" title="Success">...</Callout>
+```
+
+<Callout type="danger" title="Danger">
+  The danger callout is a red callout intended to warn users of critical errors
+  or urgent issues. Its striking appearance ensures users address these problems
+  immediately.
+</Callout>
+
+```mdx
+<Callout type="danger" title="Danger">...</Callout>
+```
+
+## Code block
+
+You can add code blocks using a jazzed-up markdown syntax like this:
+
+````md showLineNumbers title="Markdown syntax"
+```js showLineNumbers title="Code block title"
+const x = "Hello world"
+```
+````
+
+You can also use React Syntax for code blocks like this:
+<CodeBlock language="js" title="MDX syntax" showLineNumbers>
+{`<CodeBlock language="js" title="Code block title" showLineNumbers>
+    \{\`const x = "Hello world"\`\}
+</CodeBlock>`}
+</CodeBlock>
+
+Code block without a title will look like this:
+
+````md showLineNumbers
+const x = "Code block without a title"
+````
+
+## Image
+
+Here's an image with a simple markdown syntax and an image from the `/public/img` folder. This will be converted to a `next/image` with all its benefits.
+
+![Abstract art](/img/demo-image.png)
+
+```md title='Local image with markdown syntax'
+![Abstract art](/img/demo-image.png)
+```
+
+### Images with external URL
+
+Here's an image with a simple markdown syntax, but an image from the web. Since we don't know the width of the image, we can't use `next/image`, this will be converted into a simple `img` tag.
+
+![Photo of Osaka from Wikipedia](https://upload.wikimedia.org/wikipedia/commons/0/03/Dotonbori_19.jpg)
+
+```md title='Remote image with markdown syntax'
+![Photo of Osaka from Wikipedia](https://upload.wikimedia.org/wikipedia/commons/0/03/Dotonbori_19.jpg)
+```
+
+### HTML image tag
+
+You can also use the `Image` JSX tag to add images
+```jsx title="Using the Image tag"
+<Image src="/img/demo-image.png" alt="Abstract art"/>
+```
+
+### Image size
+This way you can adjust the width of the image
+```jsx title="Adjust the width of the image"
+<Image width={400} src="/img/demo-image-03.png" alt="Abstract art"/>
+```
+
+<Image width={400} src="/img/demo-image-03.png" alt="Abstract art"/>
+
+### Alignment and caption
+
+Wrap your image with `Frame` component to control the alignment and add a caption. In HTML it's rendered as a `figure` tag.
+
+```jsx
+<Frame align="center" caption="Center aligned image">
+   <Image width={300} src="/img/demo-image-01.png" alt="Abstract art"/>
+</Frame>
+```
+
+
+<Frame align="left" caption="Left aligned image">
+   <Image width={160} src="/img/demo-image-01.png" alt="Abstract art"/>
+</Frame>
+
+
+<Frame  align="center" caption="Center aligned image">
+   <Image width={160} src="/img/demo-image-02.png" alt="Abstract art"/>
+</Frame>
+
+
+<Frame align="right" caption="Right aligned image">
+   <Image width={160} src="/img/demo-image-03.png" alt="Abstract art"/>
+</Frame>
+
+### SVG
+
+Use svg images as you would use normal images.
+
+```jsx title="Add an svg image"
+<Frame align="center">
+  <Image width={800} height={450} src="/img/demo-image.svg" alt="Abstract art"/>
+</Frame>
+```
+
+<Frame align="center">
+  <Image width={800} height={450} src="/img/demo-image.svg" alt="Abstract art"/>
+</Frame>
+
+
+### Inline image
+
+If you use the `Image` tag or the markdown syntax for images outside the frame -- you're adding an inline image.
+
+```jsx title="Inline image"
+Here's an example <Image src="/img/demo-inline-image.svg" width={100} alt="Abstract art" /> of an image embedded within a paragraph.
+```
+Here's an example <Image src="/img/demo-inline-image.svg" width={100} alt="Abstract art" /> of an image embedded within a paragraph.
+
+```jsx title="Inline image with Markdown syntax"
+Here's an example ![Alt text](/img/demo-inline-image.svg) of an image embedded within a paragraph.
+```
+Here's an example ![Alt text](/img/demo-inline-image.svg) of an image embedded within a paragraph.
+
+<Callout type="info" title="Developer comment">
+What's missing for images
+1. Review/research the blur property
+2. Limit next image sizes to max width of container?
+</Callout>
+
+## Frame
+
+When you need to make an image as a block element or control its alignment. Use the `Frame` component for that. In HTML it's rendered as a `figure` tag.
+
+<Frame caption="Caption text goes here" align="center">
+   <div className="flex justify-center rounded items-center text-portal-content-label w-full h-20 border border-dashed border-portal-content-body">Content area</div>
+</Frame>
+
+```mdx
+<Frame caption="Caption text goes here" align="center">
+   ...
+</Frame>
+```
+
+The frame component supports any content inside it, not just images. For example, you can wrap tables or your own React elements. `caption` prop is a string, and `align` prop allows three possible values: `'left'`, `'center'`, and `'right'`.
+
+## Table
+
+Tables can be represented with the GFM syntax
+
+<CodeBlock title='Table using the gfm syntax'>
+{`| Rocket               | Height   | Payload to LEO | Stages |
+|:---------------------|:--------:|:--------------:|:------:|
+| SpaceX Starship      | 120 m    | 150 t          | 2      |
+| NASA SLS Block 1     | 98 m     | 95 t           | 2      |
+| Blue Origin New Glenn| 98 m     | 45 t           | 2      |`}
+</CodeBlock>
+
+
+
+| Rocket               | Height   | Payload to LEO | Stages |
+|:---------------------|:--------:|:--------------:|:------:|
+| SpaceX Starship      | 120 m    | 150 t          | 2      |
+| NASA SLS Block 1     | 98 m     | 95 t           | 2      |
+| Blue Origin New Glenn| 98 m     | 45 t           | 2      |
+
+
+#### Center and add a caption on a table
+
+You can also wrap a table inside a frame to align it and add a caption.
+
+<Frame align="center" caption="Table inside a frame with a caption">
+| Rocket               | Height   | Payload to LEO | Stages |
+|:---------------------|:--------:|:--------------:|:------:|
+| SpaceX Starship      | 120 m    | 150 t          | 2      |
+| NASA SLS Block 1     | 98 m     | 95 t           | 2      |
+| Blue Origin New Glenn| 98 m     | 45 t           | 2      |
+</Frame>
+
+Here's how to do it.
+
+```mdx title="A centered table with a caption"
+<Frame align="center" caption="Table inside a frame with a caption">
+| Rocket               | Height   | Payload to LEO | Stages |
+|:---------------------|:--------:|:--------------:|:------:|
+| SpaceX Starship      | 120 m    | 150 t          | 2      |
+| NASA SLS Block 1     | 98 m     | 95 t           | 2      |
+| Blue Origin New Glenn| 98 m     | 45 t           | 2      |
+</Frame>
+```
