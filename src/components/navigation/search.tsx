@@ -74,24 +74,14 @@ function useAutocomplete({ close }: { close: () => void }) {
   return { autocomplete, autocompleteState }
 }
 
-function HighlightQuery({
-  text,
-  query,
-  className,
-}: {
-  text: string
-  query: string
-  className?: string
-}) {
-  return (
-    <Highlighter
-      highlightClassName={className}
-      searchWords={[query]}
-      autoEscape={true}
-      textToHighlight={text}
-    />
-  )
-}
+const HighlightQuery = ({ text, query }: { text: string; query: string }) => (
+  <Highlighter
+    highlightClassName="bg-transparent font-bold text-inherit"
+    searchWords={[query]}
+    autoEscape={true}
+    textToHighlight={text}
+  />
+)
 
 type SearchResultProps = {
   result: Result
@@ -101,7 +91,13 @@ type SearchResultProps = {
   query: string
 }
 
-function SearchResult({ result, resultIndex, autocomplete, collection, query }: SearchResultProps) {
+const SearchResult = ({
+  result,
+  resultIndex,
+  autocomplete,
+  collection,
+  query,
+}: SearchResultProps) => {
   const id = useId()
 
   return (
@@ -117,15 +113,11 @@ function SearchResult({ result, resultIndex, autocomplete, collection, query }: 
         id={`${id}-title`}
         aria-hidden="true"
         className={classes(
-          'group-aria-selected:text-portal-content-body text-portal-content-label group-aria-selected:bg-portal-background-dialog-selected cursor-default px-6 py-4 font-normal',
-          resultIndex > 0 && 'border-portal-border-dialog border-t',
+          'cursor-default px-6 py-4 font-normal text-portal-content-label group-aria-selected:bg-portal-background-dialog-selected group-aria-selected:text-portal-content-body',
+          resultIndex > 0 && 'border-t border-portal-border-dialog',
         )}
       >
-        <HighlightQuery
-          className="bg-transparent font-medium text-inherit"
-          text={result.title}
-          query={query}
-        />
+        <HighlightQuery text={result.title} query={query} />
       </div>
     </li>
   )
@@ -137,7 +129,7 @@ type SearchResultsProps = {
   collection: AutocompleteCollection<Result>
 }
 
-function SearchResults({ autocomplete, query, collection }: SearchResultsProps) {
+const SearchResults = ({ autocomplete, query, collection }: SearchResultsProps) => {
   if (collection.items.length === 0) {
     return (
       <div className="flex flex-col items-center gap-4 px-6 py-8">
@@ -186,7 +178,7 @@ const SearchInput = forwardRef<
         ref={inputRef}
         data-autofocus
         className={classes(
-          'placeholder:text-portal-content-label text-portal-content-body flex-auto appearance-none bg-transparent py-4 pl-4 pr-6 outline-none focus:w-full [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden',
+          'flex-auto appearance-none bg-transparent py-4 pl-4 pr-6 text-portal-content-body outline-none placeholder:text-portal-content-label focus:w-full [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden',
           autocompleteState.status === 'stalled' ? 'pr-11' : 'pr-4',
         )}
         {...inputProps}
@@ -213,7 +205,7 @@ const SearchInput = forwardRef<
           <LoadingIcon
             aria-hidden="true"
             size={16}
-            className="text-portal-content-icon h-5 w-5 animate-spin"
+            className="h-5 w-5 animate-spin text-portal-content-icon"
           />
         </div>
       )}
@@ -221,15 +213,7 @@ const SearchInput = forwardRef<
   )
 })
 
-function SearchDialog({
-  open,
-  setOpen,
-  className,
-}: {
-  open: boolean
-  setOpen: (open: boolean) => void
-  className?: string
-}) {
+const SearchDialog = ({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) => {
   const formRef = useRef<React.ElementRef<'form'>>(null)
   const panelRef = useRef<React.ElementRef<'div'>>(null)
   const inputRef = useRef<React.ElementRef<typeof SearchInput>>(null)
@@ -269,17 +253,17 @@ function SearchDialog({
         setOpen(false)
         autocomplete.setQuery('')
       }}
-      className={classes('fixed inset-0 z-50', className)}
+      className="fixed inset-0 z-50"
     >
       <DialogBackdrop
         transition
-        className="bg-portal-background-dialog-overlay fixed inset-0 backdrop-blur data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        className="fixed inset-0 bg-portal-background-dialog-overlay backdrop-blur data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
       <div className="fixed inset-0 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
         <DialogPanel
           transition
-          className="bg-portal-background-dialog ring-portal-outline-dialog mx-auto transform-gpu overflow-hidden rounded-md shadow-lg ring-1 data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:max-w-xl"
+          className="mx-auto transform-gpu overflow-hidden rounded-md bg-portal-background-dialog shadow-lg ring-1 ring-portal-outline-dialog data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:max-w-xl"
         >
           <div {...autocomplete.getRootProps({})}>
             <form
@@ -297,7 +281,7 @@ function SearchDialog({
 
               <div
                 ref={panelRef}
-                className="border-portal-border-dialog border-t empty:hidden"
+                className="border-t border-portal-border-dialog empty:hidden"
                 {...autocomplete.getPanelProps({})}
               >
                 {autocompleteState.isOpen && (
@@ -316,65 +300,55 @@ function SearchDialog({
   )
 }
 
-function useSearchProps() {
-  const buttonRef = useRef<React.ElementRef<'button'>>(null)
-  const [open, setOpen] = useState(false)
-
-  return {
-    buttonProps: {
-      ref: buttonRef,
-      onClick: () => setOpen(true),
-    },
-
-    dialogProps: {
-      open,
-      setOpen: useCallback(
-        (open: boolean) => {
-          const { width = 0, height = 0 } = buttonRef.current?.getBoundingClientRect() ?? {}
-
-          if (!open || (width !== 0 && height !== 0)) {
-            setOpen(open)
-          }
-        },
-        [setOpen],
-      ),
-    },
-  }
-}
+const KeyBadge = ({ text }: { text: string }) => (
+  <kbd className="rounded bg-portal-background-keyboard px-1 font-sans text-xs font-semibold text-portal-content-label">
+    {text}
+  </kbd>
+)
 
 export const Search = () => {
   const [modifierKey, setModifierKey] = useState<string>()
-  const { buttonProps, dialogProps } = useSearchProps()
   const searchIndex = useSearchIndex()
+  const buttonRef = useRef<React.ElementRef<'button'>>(null)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     populate(searchIndex)
-    setModifierKey(/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl ')
+    setModifierKey(/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl')
   }, [])
 
   return (
     <>
       <button
         type="button"
-        className="bg-portal-background-button hover:text-portal-content-button-hover hover:bg-portal-background-button-hover text-portal-content-button md:mx-portal-padding-article-sides hidden w-full cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm transition active:translate-y-[1px] md:flex lg:flex-1"
-        {...buttonProps}
+        className="hidden w-full cursor-pointer items-center gap-2 rounded bg-portal-background-button px-2 py-1.5 text-sm text-portal-content-button transition hover:bg-portal-background-button-hover hover:text-portal-content-button-hover active:translate-y-[1px] md:mx-portal-padding-article-sides md:flex lg:flex-1"
+        ref={buttonRef}
+        onClick={() => setOpen(true)}
       >
         <SearchIcon aria-hidden="true" size={16} className="text-portal-content-icon" />
         Search
         {modifierKey && (
           <span className="ml-auto flex gap-0.5">
-            <kbd className="bg-portal-background-keyboard text-portal-content-label w-4 rounded font-sans text-xs font-semibold">
-              {modifierKey}
-            </kbd>
-            <kbd className="bg-portal-background-keyboard text-portal-content-label w-4 rounded font-sans text-xs font-semibold">
-              K
-            </kbd>
+            <KeyBadge text={modifierKey} />
+            <KeyBadge text="K" />
           </span>
         )}
       </button>
 
       <Suspense fallback={null}>
-        <SearchDialog {...dialogProps} />
+        <SearchDialog
+          open={open}
+          setOpen={useCallback(
+            (open: boolean) => {
+              const { width = 0, height = 0 } = buttonRef.current?.getBoundingClientRect() ?? {}
+
+              if (!open || (width !== 0 && height !== 0)) {
+                setOpen(open)
+              }
+            },
+            [setOpen],
+          )}
+        />
       </Suspense>
     </>
   )

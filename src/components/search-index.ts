@@ -18,12 +18,12 @@ const createIndex = () =>
     tokenize: 'full',
     document: {
       id: 'url',
-      index: ['content', 'children:content'],
+      index: ['title', 'pageTitle', 'content', 'children:title', 'children:content'],
       store: ['title', 'pageTitle'],
     },
     context: {
       resolution: 9,
-      depth: 2,
+      depth: 3,
       bidirectional: true,
     },
   })
@@ -46,13 +46,27 @@ export const populate = (allSections: Search['content']) => {
   for (const url in allSections) {
     const sections = allSections[url]
 
-    for (const { title, id, content, tagName } of sections) {
+    for (const section of sections) {
       index.add({
-        url: url + (tagName !== 'h1' ? '#' + id : ''),
-        title,
-        content: [title, content].join('\\n'),
-        pageTitle: title,
+        url: url + (section.tagName !== 'h1' ? '#' + section.id : ''),
+        title: section.title,
+        pageTitle: section.title,
+        content: [
+          section.title,
+          section.content,
+          ...(section.children ?? []).map((child) => child.content),
+        ].join('\n'),
       })
+
+      // Index children separately to allow direct access to sub-sections
+      for (const child of section.children ?? []) {
+        index.add({
+          url: url + '#' + child.id,
+          title: child.title,
+          pageTitle: section.title,
+          content: [child.title, child.content].join('\n'),
+        })
+      }
     }
   }
 

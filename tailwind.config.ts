@@ -1,12 +1,14 @@
+import path from 'path'
 import type { Config } from 'tailwindcss'
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
 const config: Config = {
   darkMode: 'selector',
   content: [
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    '../../packages/ui/src/**/*.{js,ts,jsx,tsx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+
+    // https://tailwindcss.com/docs/content-configuration#working-with-third-party-libraries
+    path.join(path.dirname(require.resolve('@portal-dev/ui')), '**/*.js'),
   ],
   theme: {
     extend: {

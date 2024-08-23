@@ -11,12 +11,8 @@
   "dependencies": {
     "@algolia/autocomplete-core": "^1.17.4",
     "@headlessui/react": "^2.1.2",
-    "@mdx-js/loader": "^3.0.1",
-    "@mdx-js/react": "^3.0.1",
-    "@next/mdx": "^14.2.3",
-    "@portal-dev/core": "^0.0.1",
-    "@portal-dev/ui": "^0.0.1",
-    "fast-glob": "^3.3.2",
+    "@portal-dev/core": "^0.0.2",
+    "@portal-dev/ui": "^0.0.2",
     "flexsearch": "^0.7.43",
     "framer-motion": "^11.2.12",
     "geist": "^1.3.0",
@@ -28,7 +24,6 @@
     "react-highlight-words": "^0.20.0"
   },
   "devDependencies": {
-    "@types/mdx": "^2.0.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
