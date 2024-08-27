@@ -3,81 +3,28 @@ import { NavTree } from './types'
 export const NAV_TREE: NavTree = [
   {
     type: 'category',
-    name: 'Getting started',
+    name: 'Section title one',
     children: [
       {
         type: 'link',
-        name: 'Introduction',
+        name: 'Page one',
         href: '/',
       },
       {
         type: 'link',
-        name: 'Quick start',
-        href: '/quick-start',
-      },
-      {
-        type: 'link',
-        name: 'Best practices',
-        href: '/best-practices',
+        name: 'Page two',
+        href: '/page-2',
       },
     ],
   },
   {
     type: 'category',
-    name: 'Content',
+    name: 'Section title two',
     children: [
       {
         type: 'link',
-        name: 'Page structure',
-        href: '/page-structure',
-      },
-      {
-        type: 'link',
-        name: 'Components',
-        href: '/components',
-      },
-    ],
-  },
-  {
-    type: 'category',
-    name: 'Configuration',
-    children: [
-      {
-        type: 'link',
-        name: 'Search',
-        href: '/search',
-      },
-      {
-        type: 'folder',
-        name: 'Styling',
-        children: [
-          {
-            type: 'link',
-            name: 'Overview',
-            href: '/styling/overview',
-          },
-          {
-            type: 'link',
-            name: 'CSS variables',
-            href: '/styling/css-variables',
-          },
-          {
-            type: 'link',
-            name: 'Branding images',
-            href: '/styling/branding-images',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: 'category',
-    name: 'Playground',
-    children: [
-      {
-        type: 'link',
-        name: 'Stress tests',
-        href: '/playground',
+        name: 'Page three',
+        href: '/page-3',
       },
     ],
   },
